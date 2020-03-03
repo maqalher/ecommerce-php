@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8">
+		<title>Firebase</title>
+	</head>
+<body>
+
+	<input type="text" id="nombre" placeholder="nombre"><br>
+	<input type="text" id="apellido" placeholder="apellido"><br>
+	<input type="text" id="id" ><br>
+	<button id="guardar" >Guardar</button>
+	<button id="actualizar" >Actualizar</button>
+
+<table id="datos" border="1">
+	<th>Nombre</th>
+	<th>Apellido</th>
+	<th></th>
+	<th></th>
+</table>
+
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-app.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-database.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+ https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+// Your web app's Firebase configuration
+var firebaseConfig = {
+    apiKey: "AIzaSyD2M9HjN6sY8eUYVM6J6e-hl7ivNLeujEU",
+    authDomain: "mod-firebase.firebaseapp.com",
+    databaseURL: "https://mod-firebase.firebaseio.com",
+    projectId: "mod-firebase",
+    storageBucket: "mod-firebase.appspot.com",
+    messagingSenderId: "618100763124",
+    appId: "1:618100763124:web:097b3aa9089cfccd74f1a1"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+    var database = firebase.database();
+
+
+  $('#guardar').click(function() {
+  		
+  		var nombre = $('#nombre').val();
+  		var apellido = $('#apellido').val();
+  		var id = firebase.database().ref().child('personas').push().key;
+  		firebase.database().ref('personas/'+ id).set({
+
+  			nombre:nombre,
+  			apellido:apellido,
+  			id:id
+  		});
+  		$('#nombre').val("");
+  		$('#apellido').val("");
+  });
+
+database.ref('personas').on('child_added',function(data){
+
+	const row = '<tr id="'+data.val().id+'" >'+
+	'<td>'+data.val().nombre+'</td>'+
+	'<td>'+data.val().apellido+'</td>'+
+	'<td><button value="'+data.val().id+'" onclick="editar(this.value)">editar</button></td>'+
+	'<td><button value="'+data.val().id+'" onclick="eliminar(this.value)">eliminar</button></td>'+
+	'</tr>';
+	$('#datos').append(row);
+});
+
+database.ref('personas').on('child_changed',function(data){
+	$('#'+data.val().id).remove();
+	const row = '<tr id="'+data.val().id+'" >'+
+	'<td>'+data.val().nombre+'</td>'+
+	'<td>'+data.val().apellido+'</td>'+
+	'<td><button value="'+data.val().id+'" onclick="editar(this.value)">editar</button></td>'+
+	'<td><button value="'+data.val().id+'" onclick="eliminar(this.value)">eliminar</button></td>'+
+	'</tr>';
+	$('#datos').append(row);
+});
+
+
+
+function editar(id){
+	firebase.database().ref('personas/'+ id).once('value').then(function(snapshot){
+
+		var nombre = snapshot.val().nombre;
+		var apellido = snapshot.val().apellido;
+		var id = snapshot.val().id;
+		$('#nombre').val(nombre);
+		$('#apellido').val(apellido);
+		$('#id').val(id);
+
+	});
+}
+
+$('#actualizar').click(function(event) {
+	var id = $('#id').val();
+	var nombre = $('#nombre').val();
+	var apellido = $('#apellido').val();
+	var post = {
+		nombre: nombre,
+		apellido: apellido
+	};
+	database.ref('personas/'+id).update(post);
+	$('#id').val('');
+	$('#nombre').val('');
+	$('#apellido').val('');
+});
+
+function eliminar(id){
+	firebase.database().ref('personas/'+id).remove();
+}
+
+database.ref('personas').on('child_removed', function(data){
+	$('#'+data.val().id).remove();
+});
+
+</script>
+
+
+</body>
+</html>
