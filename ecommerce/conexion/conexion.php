@@ -1,5 +1,5 @@
 <?php
 
-$con = new PDO('mysql:host=localhosy;dbname=ecommerce', 'root' . '');
+$con = new PDO('mysql:host=localhost;dbname=ecommerce', 'root' . '');
 
 ?>
