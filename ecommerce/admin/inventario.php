@@ -69,6 +69,7 @@
                                     <td><?php echo "$". number_format($f['precio'], 2); ?></td>
                                     <td><?php echo $f['categoria']; ?></td>
                                     <td><?php echo substr($f['descripcion'], 0, 100); ?></td>
+                                    <td><a href="agregar_imagenes.php?clave=<?php echo $f['clave'] ?>" class="btn btn-outline-success btn-sm"><span class="material-icons">add</span></a></td>
                                 </tr>
                             <?php
                             }

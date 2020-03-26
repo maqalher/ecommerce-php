@@ -41,6 +41,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             imagepng($nueva, $copia);
         }else {
             echo alerta('El formato no es aceptado', 'inventario.php');
+            exit;
         }
 
     }else{
