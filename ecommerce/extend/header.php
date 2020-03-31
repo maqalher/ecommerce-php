@@ -27,6 +27,18 @@
                 <li class="nav-item mr-auto">
                     <a href="../admin/inventario.php" class="nav-link">Inventario</a>
                 </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" id="navbarDropdwon" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categorias</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdwon">
+                        <a href="../admin/categorias.php?opc=GENERAL" class="dropdown-item">GENERAL</a>
+                        <a href="../admin/categorias.php?opc=MODA" class="dropdown-item">MODA</a>
+                        <a href="../admin/categorias.php?opc=ELECTRONICA" class="dropdown-item">ELECTRONICA</a>
+                        <a href="../admin/categorias.php?opc=JOYERIA" class="dropdown-item">JOYERIA</a>
+                        <a href="../admin/categorias.php?opc=RELOJES" class="dropdown-item">RELOJES</a>
+                        <a href="../admin/categorias.php?opc=HOGAR" class="dropdown-item">HOGAR</a>
+                        <a href="../admin/categorias.php?opc=ZAPATOS" class="dropdown-item">ZAPATOS</a>
+                    </div>
+                </li>
             </ul>
             <button class="btn btn-dark" id="logout">Salir</button>
         </div>
